@@ -58,7 +58,7 @@
     }
 
     const keyupListener = (event) => {
-        event.preventDefault();
+        //event.preventDefault();
         if(!event.ctrlKey) return
 
         switch(event.keyCode){

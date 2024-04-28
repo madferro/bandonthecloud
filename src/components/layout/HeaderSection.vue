@@ -7,12 +7,15 @@
             <div class="w-full nomeproggetto pt-4">
                 <input @change="updateProjectTitle" type="text" :value="title" class="text-gray-400 w-full block text bg-transparent rounded outline-none transition duration-300 shadow-none hover:bg-gray-200 p-1 focus:shadow-lg focus:bg-gray-200" placeholder="Nuovo progetto">
                 <!--<span class="text-gray-400 text-xs px-1">Ultima modifica: {{ lastModify }}</span>-->
-                <select class="w-full bg-[#1e2025] text-gray-300 shadow-lg rounded text-xs p-1" @change="handleOutputChange">
-                <option v-for="device in outputDevices"
-                    :key=device.deviceId 
-                    :value=device.deviceId
-                >{{ device.label }}</option>
-            </select>
+                <div class="flex w-full justify-center items-center">
+                    <i class="bi bi-volume-up px-1 text-gray-300 text-xl"></i>
+                    <select class="w-full bg-[#1e2025] text-gray-300 shadow-lg rounded text-xs p-1" @change="handleOutputChange">
+                        <option v-for="device in outputDevices"
+                            :key=device.deviceId 
+                            :value=device.deviceId
+                        >{{ device.label }}</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="w-4/6">

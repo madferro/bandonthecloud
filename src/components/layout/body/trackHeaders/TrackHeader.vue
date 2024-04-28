@@ -24,7 +24,7 @@
             </div>
             <i 
                 :class="{
-                    'bi-volume-up-fill' : (props.track.type === 'audio'),
+                    'bi-soundwave'      : (props.track.type === 'audio'),
                     'bip-midi'          : (props.track.type === 'instrument'),
                     'bip-drums'         : (props.track.type === 'percussion')
                 }"

@@ -12,7 +12,7 @@
             @change="setBpmValue"
             @keydown.up="incrementBpmValue"
             @keydown.down="decrementBpmValue"
-            v-model=bpm
+            :value=bpm
             class="[appearance:textfield] focus:text-white [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none outline-none focus:outline-none text-center w-full bg-transparent font-semibold text-md flex items-center text-[#8d94a5]  outline-none" name="bpm-input-number"
             />
           <button

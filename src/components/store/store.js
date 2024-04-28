@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 import Dexie from 'dexie'
-import {toggleLoadingModal,noteToNumber} from '../../utils/utils.js'
+import {toggleLoadingModal,noteToNumber,Metronome} from '../../utils/utils.js'
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css"
 
@@ -925,7 +925,6 @@ navigator.mediaDevices.removeEventListener('devicechange', discoverInputDevices)
 navigator.mediaDevices.addEventListener('devicechange', discoverInputDevices)
 
 const keyDownListener = (event) => {
-    //console.log(event.keyCode,store)
     switch(event.keyCode){
         case 67:    //c
             //if(event.ctrlKey || event.metaKey) copySelected()
@@ -937,16 +936,47 @@ const keyDownListener = (event) => {
             event.stopPropagation()
             event.preventDefault()
         break;
+        case 82:    //r
+            console.log(event.target.type)
+            if(event.target.type !== 'text'){
+                console.log(store.getters.getSelectedTrack(),!store.getters.getProjectProperty("recording"))
+                if(store.getters.getSelectedTrack() && !store.getters.getProjectProperty("recording")){
+                    const preroll           = new Metronome(store.state.project.bpm, store.state.project.divisions)
+                    const prerollBatt       = parseInt(store.getters.getProjectProperty("prerollBatt"))
+                    if(prerollBatt > 0){
+                        preroll.on('preroll-stop',() => {
+                            store.commit('toggleRecording')
+                        })
+                        preroll.start(prerollBatt);
+                    }else{
+                        store.commit('toggleRecording')
+                    }
+                }
+            }
+        break;
         case 32:    //space
-            event.stopPropagation()
-            event.preventDefault()
+            if(event.target.type !== 'text'){
+                event.stopPropagation()
+                event.preventDefault()
+                if(store.getters.getProjectProperty("recording")){
+                    store.commit('toggleRecording')
+                }else{
+                    if(store.state.project.playing){
+                        store.dispatch('playerStop')
+                    }else{
+                        store.dispatch('playerPlay')
+                    }
+                }
+            }
             //togglePlay()
         break;
         case 8:     //backspace
         case 46:    //canc
-            event.stopPropagation()
-            event.preventDefault()
-            store.dispatch('deleteItems')
+            if(event.target.type !== 'text'){
+                event.stopPropagation()
+                event.preventDefault()
+                store.dispatch('deleteItems')
+            }
         break;
     }
 }

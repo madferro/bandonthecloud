@@ -865,28 +865,30 @@
     }
 
     const keyDownListener = (event => {
-        switch(event.keyCode){
-            case 67:    //c
-                if(event.ctrlKey || event.metaKey) copySelected()
-                event.stopPropagation()
-                event.preventDefault()
-            break;
-            case 86:    //v
-                if(event.ctrlKey || event.metaKey) pasteSelected()
-                event.stopPropagation()
-                event.preventDefault()
-            break;
-            case 32:    //space
-                event.stopPropagation()
-                event.preventDefault()
-                togglePlay()
-            break;
-            case 8:     //backspace
-            case 46:    //canc
-                event.stopPropagation()
-                event.preventDefault()
-                deleteNotes()
-            break;
+        if(store.getters.getProjectProperty("midiRollInfos")){
+            switch(event.keyCode){
+                case 67:    //c
+                    if(event.ctrlKey || event.metaKey) copySelected()
+                    event.stopPropagation()
+                    event.preventDefault()
+                break;
+                case 86:    //v
+                    if(event.ctrlKey || event.metaKey) pasteSelected()
+                    event.stopPropagation()
+                    event.preventDefault()
+                break;
+                case 32:    //space
+                    event.stopPropagation()
+                    event.preventDefault()
+                    togglePlay()
+                break;
+                case 8:     //backspace
+                case 46:    //canc
+                    event.stopPropagation()
+                    event.preventDefault()
+                    deleteNotes()
+                break;
+            }
         }
     })
 
