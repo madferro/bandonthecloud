@@ -1,26 +1,28 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <SloganSection></SloganSection>
+  <BodySection v-cloak/>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+    import BodySection from './components/layout/BodySection.vue'; 
+    import SloganSection from './components/layout/SloganSection.vue'; 
+    import {useStore} from 'vuex'
+    
+    const store                     = useStore()
+    //listener per inviare i click generici sugli elementi dom
+    document.addEventListener("click",function(){
+        window.emitter.emit("genericClick")
+        store.commit("deselectEvents")
+    });
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    //listener per inviare i touchstart generici sugli elementi dom
+    document.addEventListener("touchstart",function(){
+        window.emitter.emit("genericClick")
+        store.commit("deselectEvents")
+        //event.preventDefault();
+    },{passive:false});
+
+    window.emitter.on("openAddTrackModal",function(){
+        console.log("openaddtrackmodal")
+    });
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

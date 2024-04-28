@@ -1,0 +1,14 @@
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Credentials "true"
+
+RewriteEngine On
+
+#redirect per l'api
+RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/api
+RewriteRule ^(.*)$ /backend/api.php [QSA,L]
+
+#redirect per le pagine normali
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L] 
